@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSTRUX</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            background-color: #0e0f0f;
+            display: flex;
+            font-family: sans-serif;
+            
+            /* 1. THE HARD LIMIT */
+            /* Frame (500px) + Logo space (~150px) = ~650px floor */
+            min-height: 650px; 
+            
+            /* Ensure scrollbars appear if we hit the limit */
+            overflow: auto; 
+        }
+
+        .frame-container {
+            position: relative;
+            
+            /* 2. THE SAFER CENTERING TRICK */
+            /* "margin: auto" inside a flex container centers vertically & horizontally
+               BUT respects boundaries so the top doesn't get cut off. */
+            margin: auto; 
+
+            width: 500px;
+            height: 500px;
+            
+            max-width: 90vw;
+            max-height: 90vw;
+
+            min-width: 320px; 
+            min-height: 320px;
+        }
+
+        .logo {
+            position: absolute;
+            width: 200px;
+            filter: invert(1);
+            
+            /* Floats above the frame */
+            bottom: 100%; 
+            left: 50%;
+            transform: translateX(-50%);
+            
+            margin-bottom: 25px; 
+            max-width: 80%; 
+        }
+
+        .frame {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .slideshow {
+            position: absolute;
+            top: 17%;
+            left: 17%;
+            width: 66%;
+            height: 66%;
+            overflow: hidden;
+            border-radius: 6px;
+        }
+
+        .slideshow-track {
+            display: flex;
+            height: 100%;
+            transition: transform 1s ease-in-out;
+        }
+
+        .slideshow-track img {
+            min-width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="frame-container">
+        <img src="images/ostrux-transparent.png" alt="OSTRUX" class="logo">
+
+        <div class="slideshow">
+            <div class="slideshow-track">
+                <img src="images/bones.png" alt="Bones">
+                <img src="images/portals.png" alt="Portals">
+                <img src="images/beings.png" alt="Beings">
+                <img src="images/swim.png" alt="Swim">
+                <img src="images/machin.jpeg" alt="Machine">
+                <img src="images/bones.png" alt="Bones">
+            </div>
+        </div>
+        <img src="images/frame-inside-open.png" alt="Frame" class="frame">
+    </div>
+
+    <script>
+        const track = document.querySelector('.slideshow-track');
+        const totalImages = 5; 
+        let currentIndex = 0;
+
+        function nextSlide() {
+            currentIndex++;
+            track.style.transition = 'transform 1.5s ease-in-out';
+            track.style.transform = `translateX(-${currentIndex * 100}%)`;
+
+            if (currentIndex >= totalImages) {
+                setTimeout(() => {
+                    track.style.transition = 'none';
+                    currentIndex = 0;
+                    track.style.transform = 'translateX(0%)';
+                }, 1500);
+            }
+        }
+
+        setInterval(nextSlide, 8500);
+    </script>
+</body>
+</html>
