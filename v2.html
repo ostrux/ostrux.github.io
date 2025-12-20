@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSTRUX</title>
+    <link rel="icon" type="image/x-icon" href="favicon_io_black/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon_io_black/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon_io_black/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon_io_black/apple-touch-icon.png">
+    <link rel="manifest" href="favicon_io_black/site.webmanifest">
+    <meta property="og:title" content="OSTRUX">
+    <meta property="og:description" content="A gallery of worlds becoming real.">
+    <meta property="og:image" content="https://ostrux.com/images/still.png">
+    <meta property="og:url" content="https://ostrux.com">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            background: #e8a0a0 url('images/strawberry-frame.png') center center / cover no-repeat;
+        }
+
+        .artwork {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            object-fit: contain;
+            z-index: 5;
+        }
+    </style>
+</head>
+<body>
+    <img src="images/TEMBRU.PNG" alt="Tembru" class="artwork">
+
+    <script>
+        // Frame is 2048x2048, inner cream area is 500x500 centered
+        const FRAME_SIZE = 2048;
+        const INNER_SIZE = 490;
+        const INNER_RATIO = INNER_SIZE / FRAME_SIZE;
+        const ARTWORK_FILL = 1;
+
+        const artwork = document.querySelector('.artwork');
+
+        function updateLayout() {
+            const vw = window.innerWidth;
+            const vh = window.innerHeight;
+            
+            // Frame is square, so cover = scale to larger dimension
+            const displayedSize = Math.max(vw, vh);
+            
+            // Inner area size as displayed
+            const innerDisplayed = displayedSize * INNER_RATIO;
+            
+            // Size the artwork
+            const artworkSize = innerDisplayed * ARTWORK_FILL;
+            artwork.style.width = artworkSize + 'px';
+            artwork.style.height = artworkSize + 'px';
+        }
+
+        updateLayout();
+        window.addEventListener('resize', updateLayout);
+    </script>
+</body>
+</html>
